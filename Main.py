@@ -1,9 +1,11 @@
 # from MinHeap import Min_Heap
 # heap = Min_Heap()
 import tkinter as tk
+from ManageSystem import ManageSystem 
 from PIL import Image, ImageTk
 class Pill_Reminder_App:
     def __init__(self,root):
+        self.ms = ManageSystem()
         self.root = root
         self.root.title("Pill-Reminder")
         self.root.geometry("700x400")
@@ -34,7 +36,7 @@ class Pill_Reminder_App:
         self.delete_btn = tk.Button(self.main_frame,text="حذف قرص",command=self.insert_pill,width=12,height=2,font=("Arial",14))
         self.search_btn = tk.Button(self.main_frame,text="جستجو قرص",command=self.insert_pill,width=12,height=2,font=("Arial",14))
         self.update_btn = tk.Button(self.main_frame,text="ویرایش قرص",command=self.insert_pill,width=12,height=2,font=("Arial",14))
-        self.showAll_btn = tk.Button(self.main_frame,text="مشاهده قرص ها",command=self.insert_pill,width=12,height=2,font=("Arial",14))
+        self.showAll_btn = tk.Button(self.main_frame,text="مشاهده قرص ها",command=self.showAll,width=12,height=2,font=("Arial",14))
         self.exit_btn = tk.Button(self.main_frame,text="خروج",command=self.insert_pill,width=12,height=2,font=("Arial",14))
         
         self.insert_btn.grid(row=0, column=0, padx=25, pady=14)
@@ -47,12 +49,51 @@ class Pill_Reminder_App:
     def insert_pill(self):
         add_window = tk.Toplevel(self.root)
         add_window.title("افزودن قرص")
-        add_window.geometry("600x300")
+        add_window.geometry("700x400")
         add_window.resizable(False, False)
         
-        tk.Label(add_window, text="نام قرص :").place(x=30,y=30)
-        pillName = tk.Entry(add_window)
-        pillName.place(x=90,y=30)
+        tk.Label(add_window, text="نام قرص :").place(x=140,y=30)
+        pillName = tk.Entry(add_window,font=("Arial",17))
+        pillName.place(x=210,y=30)
+        
+                
+        tk.Label(add_window, text="مدت زمان:").place(x=140,y=90)
+        pillIntervalH = tk.Entry(add_window,font=("Arial",17))
+        pillIntervalH.place(x=210,y=90)
+        
+                
+        tk.Label(add_window, text="تعداد قرص :").place(x=140,y=140)
+        pillQuantity = tk.Entry(add_window,font=("Arial",17))
+        pillQuantity.place(x=210,y=140)
+        
+        tk.Button(add_window,text="ثبت",command=lambda:self.add_pill(pillName.get(),pillIntervalH.get(),pillQuantity.get()),width=25,font=("Arial",17)).place(x=140,y=230)
+        tk.Button(add_window,text="خروج",command=add_window.destroy,width=25,font=("Arial",17)).place(x=140,y=290)
+        
+        
+        
+    
+    def add_pill(self,name,itvh,quantity):
+        itvh = int(itvh)
+        quantity = int(quantity)
+        self.ms.insert(name,itvh,quantity)
+        
+    
+    def showAll(self):
+        show_window = tk.Toplevel(self.root)
+        show_window.title("مشاهده قرص ها")
+        show_window.geometry("700x400")
+        show_window.resizable(False, False)
+        
+        # tk.Label(show_window, text="قرص ها").place(x=140,y=30)
+        self.allPill = tk.Label(show_window,text="",font=("Arial",10),bg="#B8B8B8",width=80,height=15)
+        self.allPill.place(x=23,y=15)
+        
+        text = self.ms.showAll()
+        
+        self.allPill.config(text=text)
+        
+        tk.Button(show_window,text="خروج",command=show_window.destroy,width=25,font=("Arial",17)).place(x=155,y=290)
+            
 
 
 if __name__ == "__main__":

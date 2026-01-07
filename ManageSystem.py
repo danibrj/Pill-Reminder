@@ -7,3 +7,7 @@ class ManageSystem:
     def insert(self,name,intervalHours,quantity):
         pill = Pill(name,intervalHours,quantity)
         self.heap.insert(pill)
+        print("added")
+    
+    def showAll(self):
+        return self.heap.printh()

@@ -53,8 +53,11 @@ class Min_Heap:
         return len(self.heap)
     
     def printh(self):
-        for i in self.heap:
-            print(i)
+        text = ""
+        for item in self.heap[1:]:
+            text += str(item) + "\n"
+            print("T")
+        return text
 
 
 # x = Min_Heap()
