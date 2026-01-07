@@ -3,12 +3,12 @@ class Min_Heap:
         self.heap = []
         self.n = 0
         
-    def insert(self, num):
+    def insert(self, pill):
         if not self.size():
             self.heap.append(0)
             self.n += 1
             
-        self.heap.append(num)
+        self.heap.append(pill)
         self.n += 1
         self._bubble_up(self.n - 1)
     
@@ -22,7 +22,7 @@ class Min_Heap:
         return temp
     
     def _bubble_up(self, idx):
-        while idx > 1 and self.heap[idx] < self.heap[idx // 2]:
+        while idx > 1 and self.heap[idx].nextTime < self.heap[idx // 2].nextTime:
             self.heap[idx], self.heap[idx // 2] = self.heap[idx // 2], self.heap[idx]
             idx //= 2
         
@@ -30,9 +30,9 @@ class Min_Heap:
         j = 0
         while 2 * idx < self.n and idx != j:
             j = idx
-            if self.heap[2 * idx] < self.heap[j]:
+            if self.heap[2 * idx].nextTime < self.heap[j].nextTime:
                 j = 2 * idx
-            if 2 * idx + 1 < self.n and self.heap[2 * idx + 1] < self.heap[j]:
+            if 2 * idx + 1 < self.n and self.heap[2 * idx + 1].nextTime < self.heap[j].nextTime:
                 j = 2 * idx + 1
             self.heap[idx], self.heap[j] = self.heap[j], self.heap[idx]
             idx = j
