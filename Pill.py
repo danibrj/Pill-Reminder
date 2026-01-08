@@ -1,5 +1,6 @@
 from datetime import datetime
 from datetime import timedelta
+import jdatetime
 class Pill:
     def __init__(self,name,intervalHours,quantity):
         self.name = name
@@ -13,9 +14,10 @@ class Pill:
         self.nextTime = datetime.now() + timedelta(hours=self.intervalHours)
         
     def __str__(self):
-        return (f"Pill: {self.name} | "
-                f"Quantity: {self.quantity} | "
-                f"Next Time: {self.nextTime.strftime('%Y-%m-%d %H:%M:%S')} | "
-                f"Interval: {self.intervalHours}h")
+        persian_next = jdatetime.datetime.fromgregorian(datetime=self.nextTime)
+        return (f"نام: {self.name} | "
+                f"تعداد: {self.quantity} | "
+                f"زمان بعدی مصرف: {persian_next.strftime('%Y/%m/%d %H:%M:%S')} | "
+                f"هر {self.intervalHours} ساعت")
         
     
